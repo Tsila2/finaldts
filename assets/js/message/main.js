@@ -93,15 +93,18 @@ $(document).ready(function () {
 	function setUserDetails(data) {
 		var user_name = `${data[0]['user_fname']} ${data[0]['user_lname']}`;
 		var status = data[0]['user_status'];
-		var avtar = '<?php echo site_url("upload/") ?>' + data[0]['user_avtar'];
+		// var avtar = `../upload/${data[0]['user_avtar']}`;
+		var avtar = data[0]['user_avtar'];
 		var last_seen = data[0]['last_logout'];
 		offlineOnlineIndicator(status, last_seen);
 		$('#name_last_seen h6').html(user_name);
-		$('#chat_profile_image').css('background-image', `url(${avtar})`);
-		$('#new_message_avtar').css('background-image', `url(${avtar})`);
+		// $('#chat_profile_image').css('background-image', `url(${avtar})`);
+		// $('#new_message_avtar').css('background-image', `url(${avtar})`);
 		$('#mail_link').attr('href', `mailto:${data[0]['user_email']}`);
 
-		$('#user_details_container_avtar').css('background-image', `url(${avtar})`);
+		// $('#user_details_container_avtar').css('background-image', `url(${avtar})`);
+		$('#input_user').val(`${avtar}`);
+
 		$('#details_of_user h5').html(user_name);
 		(data[0]['bio'].length > 1) ? $('#details_of_bio').html(data[0]['bio']) : $('#details_of_bio').html("--Not Given--");
 
@@ -238,13 +241,13 @@ $(document).ready(function () {
 	});
 
 	// Send message when clicking the button "Enter"
-	$('#messageText').keypress(function(event) {
+	$('#messageText').keypress(function (event) {
 		if (event.which === 13 && event.target === this) {
 			event.preventDefault(); // Prevent the default Enter key behavior
 			$('#send_message').click(); // Trigger the click event of the send_message button
 		}
 	});
-	
+
 	//send message after button click
 	$('#send_message').click(function (e) {
 		var message = $('#messageText').val();
