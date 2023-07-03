@@ -8,7 +8,7 @@
                 <div id="receiver_msg">
                         <p class="m-0" id="receiver_ptag"><?php echo $data[$i]['message'];?></p>
                 </div>
-                <div id="receiver_image" style="background-size: 100% 100%; background-image:url('<?php echo "../upload/".$_SESSION['image'];?>')"></div>
+                <div id="receiver_image" style="background-size: 100% 100%; background-image:url('<?php echo  site_url('upload/').$_SESSION['image'];?>')"></div>
             </div>
         <?php
         }else{

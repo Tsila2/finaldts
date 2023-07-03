@@ -45,7 +45,7 @@ $(document).ready(function(){
 		if(flag == input.length){
 			let formData = new FormData(this);
 			$.ajax({
-				url : 'index.php/search',
+				url : 'search',
 				type : 'post',
 				data : formData,
 				processData:false,
@@ -55,7 +55,7 @@ $(document).ready(function(){
 						$('#form_login').trigger('reset');
 						remove_alert();
 						// console.log(res);
-						location.href = "./index.php/message";
+						location.href = "./message";
 					}else{
 						error_message('Invalid email or password');
 						email.focus();

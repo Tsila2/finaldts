@@ -93,7 +93,7 @@ $(document).ready(function () {
 	function setUserDetails(data) {
 		var user_name = `${data[0]['user_fname']} ${data[0]['user_lname']}`;
 		var status = data[0]['user_status'];
-		var avtar = `../upload/${data[0]['user_avtar']}`;
+		var avtar = '<?php echo site_url("upload/") ?>' + data[0]['user_avtar'];
 		var last_seen = data[0]['last_logout'];
 		offlineOnlineIndicator(status, last_seen);
 		$('#name_last_seen h6').html(user_name);

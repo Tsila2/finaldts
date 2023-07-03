@@ -13,10 +13,10 @@ if (isset($_SESSION)) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/message/messagestyle.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/message/messagestyle.css');?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/message/loading-bar.css">
+    <link rel="stylesheet" href="<?php echo site_url('assets/css/message/loading-bar.css');?>">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	
 	<title> <?php echo $title;?></title>
@@ -25,7 +25,7 @@ if (isset($_SESSION)) {
 	<section id="main" class="bg-dark">
 		<div id="chat_user_list">
 			<div id="owner_profile_details">
-				<div id="owner_avtar" style="background-image: url('../upload/<?php echo $image;?>'); background-size: 100% 100%">
+					<div id="owner_avtar" style="background-image: url('<?php echo site_url('upload/').$image;?>'); background-size: 100% 100%">
 					<div>
 						<div id="online"></div>
 					</div>
@@ -137,6 +137,6 @@ if (isset($_SESSION)) {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
-	<script type="text/javascript" src="../assets/js/message/main.js"></script>
+	<script type="text/javascript" src="<?php echo site_url('assets/js/message/main.js')?>"></script>
 </body>
 </html>

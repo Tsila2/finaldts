@@ -7,7 +7,7 @@ for ($i=0; $i < $count ; $i++) {
 			<div class='innerBox'>
 					<div class='user px-3 py-2'>
 						<div id='avtar_and_details' class=''>
-							<div id='user_avtar' style="background-image: url('../upload/<?php echo $data[$i]['user_avtar'];?>'); background-size: 100% 100%;">
+							<div id='user_avtar' style="background-image: url('<?php echo  site_url('upload/').$data[$i]['user_avtar'];?>'); background-size: 100% 100%;">
 								<div id='online'></div>
 								<input type='hidden' name='hdn' id='hidden_id' value="<?php echo $data[$i]['unique_id'];?>">
 							</div>
@@ -60,7 +60,7 @@ for ($i=0; $i < $count ; $i++) {
 		<div class='innerBox'>
 					<div class='user px-3 py-2'>
 						<div id='avtar_and_details' class=''>
-							<div id='user_avtar' style="background-image: url('../upload/<?php echo $data[$i]['user_avtar'];?>'); background-size: 100% 100%;">
+							<div id='user_avtar' style="background-image: url('<?php echo  site_url('upload/').$data[$i]['user_avtar'];?>'); background-size: 100% 100%;">
 								<input type='hidden' name='hdn' id='hidden_id' value="<?php echo $data[$i]['unique_id'];?>">
 							</div>
 							<div id='user_details' class='px-2'>
