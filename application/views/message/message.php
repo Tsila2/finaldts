@@ -169,12 +169,28 @@ if (isset($_SESSION)) {
 						$('#user_details_container_avtar').css('background-image', `url(${avatar})`);
 					}
 				}
-			}, 100); // Vérifier toutes les 1 seconde
+			}, 100); // Vérifier toutes les 0.1 seconde
 
 			// Arrêter la vérification lorsque nécessaire
 			// clearInterval(intervalId);
 		});
 
+	</script>
+
+	<script>
+		// Function to handle tab closing event
+		window.onbeforeunload = function () {
+			// Send an AJAX request to notify the server that the tab is being closed
+			$.ajax({
+				type: "POST",
+				url: "<?php echo base_url('authenticate/tab_close_handler'); ?>",
+				data: {
+					active_tab: 'closed',
+					// Include any other relevant data that you may need
+				},
+				async: false, // Make the request synchronous to ensure it is sent before the tab closes
+			});
+		};
 	</script>
 
 </body>

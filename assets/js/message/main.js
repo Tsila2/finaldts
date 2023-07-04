@@ -320,6 +320,7 @@ $(document).ready(function () {
 			$.post('Message/unBlockUser', { uniq: unique_id })
 		}
 	})
+
 	//working on block & unblock program
 	function getBlockUserData() {
 		$.post('Message/getBlockUserData', { uniq: unique_id }, function (data) {
