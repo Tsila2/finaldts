@@ -21,23 +21,28 @@ for ($i = 0; $i < $count; $i++) {
 							$output = "";
 							for ($j = 0; $j < count($last_msg); $j++) {
 								if ($data[$i]['unique_id'] == $last_msg[$j]['sender_id']) {
-									if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
-										// Extract the name from the message if it's a link
-										preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-										$output = $matches[1];
-									} else {
-										$output = $last_msg[$j]['message'];
-									}
+									if ($last_msg[$j]['message'] == 'erimg') {
+										$output = "image";
+									} else
+										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
+											// Extract the name from the message if it's a link
+											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
+											$output = $matches[1];
+										} else {
+											$output = $last_msg[$j]['message'];
+										}
 
 								} elseif ($data[$i]['unique_id'] == $last_msg[$j]['receiver_id']) {
-
-									if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
-										// Extract the name from the message if it's a link
-										preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-										$output = "You : " . $matches[1];
-									} else {
-										$output = "You : " . $last_msg[$j]['message'];
-									}
+									if ($last_msg[$j]['message'] == 'erimg') {
+										$output = "image";
+									} else
+										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
+											// Extract the name from the message if it's a link
+											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
+											$output = "You : " . $matches[1];
+										} else {
+											$output = "You : " . $last_msg[$j]['message'];
+										}
 
 								} else {
 									// $output = "No message yet..";
@@ -88,23 +93,28 @@ for ($i = 0; $i < $count; $i++) {
 							for ($j = 0; $j < count($last_msg); $j++) {
 
 								if ($data[$i]['unique_id'] == $last_msg[$j]['sender_id']) {
-									if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
-										// Extract the name from the message if it's a link
-										preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-										$output = $matches[1];
-									} else {
-										$output = $last_msg[$j]['message'];
-									}
+									if ($last_msg[$j]['message'] == 'erimg') {
+										$output = "image";
+									} else
+										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
+											// Extract the name from the message if it's a link
+											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
+											$output = $matches[1];
+										} else {
+											$output = $last_msg[$j]['message'];
+										}
 
 								} elseif ($data[$i]['unique_id'] == $last_msg[$j]['receiver_id']) {
-
-									if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
-										// Extract the name from the message if it's a link
-										preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-										$output = "You : " . $matches[1];
-									} else {
-										$output = "You : " . $last_msg[$j]['message'];
-									}
+									if ($last_msg[$j]['message'] == 'erimg') {
+										$output = "image";
+									} else
+										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
+											// Extract the name from the message if it's a link
+											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
+											$output = "You : " . $matches[1];
+										} else {
+											$output = "You : " . $last_msg[$j]['message'];
+										}
 
 								} else {
 									// $output = "No message yet..";

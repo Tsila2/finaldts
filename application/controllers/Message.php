@@ -104,20 +104,20 @@ class Message extends CI_controller
 			$file_name = $file['name'];
 			$file_tmpname = $file['tmp_name'];
 			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-			$file_new_name = substr(md5(microtime()), rand(0, 25), 8);
-			$file_upload_name = $file_new_name . "." . $extension;
+			// $file_new_name = substr(md5(microtime()), rand(0, 25), 8);
+			// $file_upload_name = $file_new_name . "." . $extension;
 
 			// Check if the file is an image
 			$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 			if (in_array($extension, $allowed_extensions)) {
 				// Move the uploaded file to the destination directory
-				move_uploaded_file($file_tmpname, "upload/messages/images/" . $file_upload_name);
+				move_uploaded_file($file_tmpname, "upload/messages/images/" . $file_name);
 
 				$arr = array(
 					'time' => $_POST['datetime'],
 					'sender_message_id' => $uniq,
 					'receiver_message_id' => $_POST['uniq'],
-					'image_path' => $file_upload_name,
+					'image_path' => $file_name,
 				);
 
 				$this->Messagemodel->sentMessage($arr);
@@ -141,19 +141,19 @@ class Message extends CI_controller
 			$file_name = $file['name'];
 			$file_tmpname = $file['tmp_name'];
 			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-			$file_new_name = substr(md5(microtime()), rand(0, 25), 8);
-			$file_upload_name = $file_new_name . "." . $extension;
+			// $file_new_name = substr(md5(microtime()), rand(0, 25), 8);
+			// $file_upload_name = $file_new_name . "." . $extension;
 
 			// Move the uploaded file to the destination directory
-			move_uploaded_file($file_tmpname, "upload/messages/files/" . $file_upload_name);
+			move_uploaded_file($file_tmpname, "upload/messages/files/" . $file_name);
 
-			$file_download_link = site_url('upload/messages/files/' . $file_upload_name);
+			$file_download_link = site_url('upload/messages/files/' . $file_name);
 
 			$arr = array(
 				'time' => $_POST['datetime'],
 				'sender_message_id' => $uniq,
 				'receiver_message_id' => $_POST['uniq'],
-				'file_path' => $file_upload_name,
+				'file_path' => $file_name,
 				'message' => '<a href="' . $file_download_link . '">' . $file_name . '</a>'
 			);
 

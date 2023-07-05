@@ -89,7 +89,7 @@ if (isset($_SESSION)) {
 				</div>
 
 				<div id="messageBar" class="py-4 px-4">
-					<div id="attachmentButtonContainer" style="display: inline-block;">
+					<div id="attachmentButtonContainer" style="display: flex; justify-content: space-between">
 						<label for="imageUpload" class="attachmentButton"
 							style="display: inline-block; cursor: pointer;">
 							<span class="material-icons" style="vertical-align: middle;">image</span>
