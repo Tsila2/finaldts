@@ -45,6 +45,8 @@ class Message extends CI_controller
 						$data['last_msg'],
 						array(
 							'message' => $msg[0]['message'],
+							'image_path' => $msg[0]['image_path'],
+							'file_path' => $msg[0]['file_path'],
 							'sender_id' => $msg[0]['sender_message_id'],
 							'receiver_id' => $msg[0]['receiver_message_id'],
 							'time' => $time //00:00
@@ -104,20 +106,21 @@ class Message extends CI_controller
 			$file_name = $file['name'];
 			$file_tmpname = $file['tmp_name'];
 			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-			// $file_new_name = substr(md5(microtime()), rand(0, 25), 8);
-			// $file_upload_name = $file_new_name . "." . $extension;
 
 			// Check if the file is an image
 			$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
 			if (in_array($extension, $allowed_extensions)) {
+				// Generate a unique filename
+				$unique_file_name = $this->generateUniqueFileName($file_name, $extension);
+
 				// Move the uploaded file to the destination directory
-				move_uploaded_file($file_tmpname, "upload/messages/images/" . $file_name);
+				move_uploaded_file($file_tmpname, "upload/messages/images/" . $unique_file_name);
 
 				$arr = array(
 					'time' => $_POST['datetime'],
 					'sender_message_id' => $uniq,
 					'receiver_message_id' => $_POST['uniq'],
-					'image_path' => $file_name,
+					'image_path' => $unique_file_name,
 				);
 
 				$this->Messagemodel->sentMessage($arr);
@@ -130,6 +133,21 @@ class Message extends CI_controller
 			echo "Error";
 		}
 	}
+
+	private function generateUniqueFileName($file_name, $extension)
+	{
+		$directory = "upload/messages/images/";
+		$new_file_name = $file_name;
+		$i = 1;
+
+		while (file_exists($directory . $new_file_name)) {
+			$new_file_name = pathinfo($file_name, PATHINFO_FILENAME) . "_" . $i . "." . $extension;
+			$i++;
+		}
+
+		return $new_file_name;
+	}
+
 
 	public function sendFile()
 	{

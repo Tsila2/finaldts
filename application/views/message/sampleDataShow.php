@@ -21,7 +21,7 @@ for ($i = 0; $i < $count; $i++) {
 							$output = "";
 							for ($j = 0; $j < count($last_msg); $j++) {
 								if ($data[$i]['unique_id'] == $last_msg[$j]['sender_id']) {
-									if ($last_msg[$j]['message'] == 'erimg') {
+									if ($last_msg[$j]['image_path']) {
 										$output = "image";
 									} else
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
@@ -33,7 +33,7 @@ for ($i = 0; $i < $count; $i++) {
 										}
 
 								} elseif ($data[$i]['unique_id'] == $last_msg[$j]['receiver_id']) {
-									if ($last_msg[$j]['message'] == 'erimg') {
+									if ($last_msg[$j]['image_path']) {
 										$output = "image";
 									} else
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
@@ -93,7 +93,7 @@ for ($i = 0; $i < $count; $i++) {
 							for ($j = 0; $j < count($last_msg); $j++) {
 
 								if ($data[$i]['unique_id'] == $last_msg[$j]['sender_id']) {
-									if ($last_msg[$j]['message'] == 'erimg') {
+									if ($last_msg[$j]['image_path']) {
 										$output = "image";
 									} else
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
@@ -105,7 +105,7 @@ for ($i = 0; $i < $count; $i++) {
 										}
 
 								} elseif ($data[$i]['unique_id'] == $last_msg[$j]['receiver_id']) {
-									if ($last_msg[$j]['message'] == 'erimg') {
+									if ($last_msg[$j]['image_path']) {
 										$output = "image";
 									} else
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
