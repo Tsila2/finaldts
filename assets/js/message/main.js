@@ -74,7 +74,7 @@ $(document).ready(function () {
 
 				inter = setInterval(function () {
 					sendUserUniqIDForMsg(unique_id, bg_image);
-				}, 100);
+				}, 1000);
 			})
 			$('.innerBox').mouseover(function () {
 				clearInterval(inter2);
@@ -93,16 +93,16 @@ $(document).ready(function () {
 	function setUserDetails(data) {
 		var user_name = `${data[0]['user_fname']} ${data[0]['user_lname']}`;
 		var status = data[0]['user_status'];
-		// var avtar = `../upload/${data[0]['user_avtar']}`;
-		var avtar = data[0]['user_avtar'];
+		var avtar = `upload/${data[0]['user_avtar']}`;
+		// var avtar = data[0]['user_avtar'];
 		var last_seen = data[0]['last_logout'];
 		offlineOnlineIndicator(status, last_seen);
 		$('#name_last_seen h6').html(user_name);
-		// $('#chat_profile_image').css('background-image', `url(${avtar})`);
-		// $('#new_message_avtar').css('background-image', `url(${avtar})`);
+		$('#chat_profile_image').css('background-image', `url(${avtar})`);
+		$('#new_message_avtar').css('background-image', `url(${avtar})`);
 		$('#mail_link').attr('href', `mailto:${data[0]['user_email']}`);
 
-		// $('#user_details_container_avtar').css('background-image', `url(${avtar})`);
+		$('#user_details_container_avtar').css('background-image', `url(${avtar})`);
 		$('#input_user').val(`${avtar}`);
 
 		$('#details_of_user h5').html(user_name);
@@ -464,6 +464,7 @@ $(document).ready(function () {
 			}
 		})
 	}
+
 	Pace.on('done', function () {
 		MAIN_PLAY.play();
 	})

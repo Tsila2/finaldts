@@ -147,11 +147,14 @@ class Message extends CI_controller
 			// Move the uploaded file to the destination directory
 			move_uploaded_file($file_tmpname, "upload/messages/files/" . $file_upload_name);
 
+			$file_download_link = site_url('upload/messages/files/' . $file_upload_name);
+
 			$arr = array(
 				'time' => $_POST['datetime'],
 				'sender_message_id' => $uniq,
 				'receiver_message_id' => $_POST['uniq'],
 				'file_path' => $file_upload_name,
+				'message' => '<a href="' . $file_download_link . '">' . $file_name . '</a>'
 			);
 
 			$this->Messagemodel->sentMessage($arr);

@@ -103,10 +103,10 @@ if (isset($_SESSION)) {
 					</div>
 
 
-					<div id="textBox_attachment_emoji_container" style="display: inline-block;">
+					<div id="textBox_attachment_emoji_container" style="display: flex">
 						<div id="text_box_message">
-							<input type="text" maxlength="200" name="txt_message" id="messageText" class="form-control"
-								placeholder="Type your message">
+							<textarea maxlength="200" name="txt_message" id="messageText" class="form-control no-resize"
+								placeholder="Type your message"></textarea>
 						</div>
 						<div id="text_counter">
 							<p id="count_text" class="m-0 p-0"></p>
@@ -170,30 +170,6 @@ if (isset($_SESSION)) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
 	<script type="text/javascript" src="<?php echo site_url('assets/js/message/main.js') ?>"></script>
-	<script>
-		$(document).ready(function () {
-			var previousValue = $("#input_user").val().trim();
-
-			var intervalId = setInterval(function () {
-				var currentValue = $("#input_user").val().trim();
-
-				if (currentValue !== previousValue) {
-					previousValue = currentValue;
-
-					if (currentValue !== "") {
-						var avatar = '<?php echo site_url('upload/') ?>' + currentValue;
-						$('#chat_profile_image').css('background-image', `url(${avatar})`);
-						$('#new_message_avtar').css('background-image', `url(${avatar})`);
-						$('#user_details_container_avtar').css('background-image', `url(${avatar})`);
-					}
-				}
-			}, 100); // Vérifier toutes les 0.1 seconde
-
-			// Arrêter la vérification lorsque nécessaire
-			// clearInterval(intervalId);
-		});
-
-	</script>
 
 	<script>
 		// Function to handle tab closing event
