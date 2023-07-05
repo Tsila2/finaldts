@@ -58,4 +58,6 @@ $route['search'] = 'Authenticate/loginData';
 $route['message'] = 'Message';
 $route['logout'] = 'Message/logout';
 $route['sent'] = 'Message/sendMessage';
+$route['sent/image'] = 'Message/sendImage';
+$route['sent/file'] = 'Message/sendFile';
 $route['getmessage'] = 'Message/getMessage';

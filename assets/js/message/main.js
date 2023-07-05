@@ -321,6 +321,109 @@ $(document).ready(function () {
 		}
 	})
 
+	// Add click event listener to the image attachment button
+	$('#attachmentButtonContainer').on('click', '#imageUploadButton', function () {
+		// Trigger the click event on the hidden image upload input field
+		$('#imageUpload').click();
+	});
+
+	// Add click event listener to the file attachment button
+	$('#attachmentButtonContainer').on('click', '#fileUploadButton', function () {
+		// Trigger the click event on the hidden file upload input field
+		$('#fileUpload').click();
+	});
+
+	// Image upload handling
+	$('#imageUpload').on('change', function (e) {
+		var file = e.target.files[0];
+		if (file) {
+			// Process the image file
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				var imageData = e.target.result;
+
+				var d = new Date(),
+					messageHour = d.getHours(),
+					messageMinute = d.getMinutes(),
+					messageSec = d.getSeconds(),
+					messageYear = d.getFullYear(),
+					messageDate = d.getDate(),
+					messageMonth = d.getMonth() + 1,
+					actualDateTime = `${messageYear}-${messageMonth}-${messageDate} ${messageHour}:${messageMinute}:${messageSec}`;
+
+				var data = new FormData();
+				data.append('file', file);
+				data.append('datetime', actualDateTime);
+				data.append('uniq', unique_id);
+
+				$.ajax({
+					url: 'sent/image',
+					type: 'POST',
+					data: data,
+					contentType: false,
+					processData: false,
+					success: function (response) {
+						// Handle the upload success
+						if(response === "Not allowed."){
+							alert("Format non pris en charge");
+						}
+						$('#imageUpload').val('');
+					},
+					error: function (xhr, status, error) {
+						// Handle the upload error
+						console.error('Image upload failed:', error);
+					}
+				});
+			};
+			reader.readAsDataURL(file);
+		}
+	});
+
+
+
+	$('#fileUpload').on('change', function (e) {
+		var file = e.target.files[0];
+		if (file) {
+			// Process the file
+			// Example: Perform any required operations with the file data
+	
+			var d = new Date(),
+				messageHour = d.getHours(),
+				messageMinute = d.getMinutes(),
+				messageSec = d.getSeconds(),
+				messageYear = d.getFullYear(),
+				messageDate = d.getDate(),
+				messageMonth = d.getMonth() + 1,
+				actualDateTime = `${messageYear}-${messageMonth}-${messageDate} ${messageHour}:${messageMinute}:${messageSec}`;
+	
+			var data = new FormData();
+			data.append('file', file);
+			data.append('datetime', actualDateTime);
+			data.append('uniq', unique_id);
+	
+			$.ajax({
+				url: 'sent/file',
+				type: 'POST',
+				data: data,
+				contentType: false,
+				processData: false,
+				success: function (response) {
+					// Handle the upload success
+					console.log(response);
+					// console.log('File uploaded successfully');
+					// $('#fileUpload').val('');
+				},
+				error: function (xhr, status, error) {
+					// Handle the upload error
+					console.error('File upload failed:', error);
+				}
+			});
+		}
+	});
+	
+
+
+
 	//working on block & unblock program
 	function getBlockUserData() {
 		$.post('Message/getBlockUserData', { uniq: unique_id }, function (data) {

@@ -87,8 +87,23 @@ if (isset($_SESSION)) {
 				<div id="chat_message_area">
 
 				</div>
+
 				<div id="messageBar" class="py-4 px-4">
-					<div id="textBox_attachment_emoji_container">
+					<div id="attachmentButtonContainer" style="display: inline-block;">
+						<label for="imageUpload" class="attachmentButton"
+							style="display: inline-block; cursor: pointer;">
+							<span class="material-icons" style="vertical-align: middle;">image</span>
+							<input type="file" id="imageUpload" name="file1" accept="image/*" style="display: none;">
+						</label>
+						<label for="fileUpload" class="attachmentButton"
+							style="display: inline-block; cursor: pointer;">
+							<span class="material-icons" style="vertical-align: middle;">attach_file</span>
+							<input type="file" id="fileUpload" name="file2" style="display: none;">
+						</label>
+					</div>
+
+
+					<div id="textBox_attachment_emoji_container" style="display: inline-block;">
 						<div id="text_box_message">
 							<input type="text" maxlength="200" name="txt_message" id="messageText" class="form-control"
 								placeholder="Type your message">
@@ -97,12 +112,15 @@ if (isset($_SESSION)) {
 							<p id="count_text" class="m-0 p-0"></p>
 						</div>
 					</div>
-					<div id="sendButtonContainer">
+
+					<div id="sendButtonContainer" style="display: inline-block;">
 						<button class="btn" id="send_message">
 							<span class="material-icons">send</span>
 						</button>
 					</div>
 				</div>
+
+
 			</div>
 		</div>
 		<div id="details_of_user">

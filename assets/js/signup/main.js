@@ -61,7 +61,7 @@ $(document).ready(function () {
 			var fullDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 			formData.append("created_at", fullDate);
 			$.ajax({
-				url: '../index.php/insert',
+				url: './insert',
 				type: 'post',
 				data: formData,
 				processData: false,

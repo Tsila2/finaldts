@@ -1,102 +1,184 @@
 <?php
-class Message extends CI_controller{
-	public function index(){
-		if(isset($_SESSION['image'])){
+class Message extends CI_controller
+{
+	public function index()
+	{
+		if (isset($_SESSION['image'])) {
 			$data['data'] = $this->Messagemodel->ownerDetails();
 			$data['title'] = "Message";
-			$this->load->view('message/message',$data);
-		}else{
+			$this->load->view('message/message', $data);
+		} else {
 			$this->load->view('error/error');
 		}
 	}
-	public function ownerDetails(){
+	public function ownerDetails()
+	{
 		$res = $this->Messagemodel->ownerDetails();
 		print_r(json_encode($res));
 	}
-	public function allUser(){
+	public function allUser()
+	{
 		$data['data'] = $this->Messagemodel->allUser();
 		$data['last_msg'] = array();
 		$this->load->helper('url');
-		if(!is_array($data['data'])){
+		if (!is_array($data['data'])) {
 			echo "<p class='text-center'>No user available.</p>";
-		}else{
+		} else {
 			$count = count($data['data']);
-			for($i = 0; $i < $count; $i++){
+			for ($i = 0; $i < $count; $i++) {
 				$unique_id = $data['data'][$i]['unique_id'];
 				$msg = $this->Messagemodel->getLastMessage($unique_id);
-				for($j = 0; $j < count($msg); $j++){
+				for ($j = 0; $j < count($msg); $j++) {
 
-					$time = explode(" ",$msg[0]['time']); //00:00:00.0000
-					$time = explode(".", $time[1]);//00:00:00
-					$time = explode(":",$time[0]);//00 00 00
-					if((int)$time[0] == 12){
-						$time = $time[0].":".$time[1]." PM";
-					}
-					elseif((int)$time[0] > 12){
-						$time = ($time[0] - 12).":".$time[1]." PM";
-					}else{
-						$time = $time[0].":".$time[1]." AM";
+					$time = explode(" ", $msg[0]['time']); //00:00:00.0000
+					$time = explode(".", $time[1]); //00:00:00
+					$time = explode(":", $time[0]); //00 00 00
+					if ((int) $time[0] == 12) {
+						$time = $time[0] . ":" . $time[1] . " PM";
+					} elseif ((int) $time[0] > 12) {
+						$time = ($time[0] - 12) . ":" . $time[1] . " PM";
+					} else {
+						$time = $time[0] . ":" . $time[1] . " AM";
 					}
 
-					array_push($data['last_msg'],array(
-						'message' => $msg[0]['message'],
-						'sender_id' => $msg[0]['sender_message_id'],
-						'receiver_id' => $msg[0]['receiver_message_id'],
-						'time' => $time //00:00
-					));
+					array_push(
+						$data['last_msg'],
+						array(
+							'message' => $msg[0]['message'],
+							'sender_id' => $msg[0]['sender_message_id'],
+							'receiver_id' => $msg[0]['receiver_message_id'],
+							'time' => $time //00:00
+						)
+					);
 				}
 			}
-			$this->load->view('message/sampleDataShow',$data);
+			$this->load->view('message/sampleDataShow', $data);
 		}
-		
+
 	}
-	public function getIndividual(){
+	public function getIndividual()
+	{
 		$returnVal = $this->Messagemodel->getIndividual($_POST['data']);
-		print_r(json_encode($returnVal,true));
+		print_r(json_encode($returnVal, true));
 	}
-	public function logout(){
+	public function logout()
+	{
 		$date = $_POST['date'];
 		$this->load->helper('url');
-		$this->Messagemodel->logoutUser('deactive',$date);
+		$this->Messagemodel->logoutUser('deactive', $date);
 		unset(
 			$_SESSION['uniqueid'],
 			$_SESSION['username'],
 			$_SESSION['image']
-		);
+			);
 		echo base_url();
 	}
-	public function setNoMessage(){
+	public function setNoMessage()
+	{
 		$data['image'] = $_POST['image'];
 		$data['name'] = $_POST['name'];
-		$this->load->view('message/notmessageyet',$data);
+		$this->load->view('message/notmessageyet', $data);
 	}
-	public function sendMessage(){
-		if(isset($_POST['data']) && isset($_SESSION['uniqueid'])){
-		$jsonDecode = json_decode($_POST['data'],true);
-		$uniq = $_SESSION['uniqueid'];
-		$arr = array(
-			'time' => $jsonDecode['datetime'],
-			'sender_message_id' => $uniq,
-			'receiver_message_id' => $jsonDecode['uniq'],
-			'message' => $jsonDecode['message'],
-		);
+	public function sendMessage()
+	{
+		if (isset($_POST['data']) && isset($_SESSION['uniqueid'])) {
+			$jsonDecode = json_decode($_POST['data'], true);
+			$uniq = $_SESSION['uniqueid'];
+			$arr = array(
+				'time' => $jsonDecode['datetime'],
+				'sender_message_id' => $uniq,
+				'receiver_message_id' => $jsonDecode['uniq'],
+				'message' => $jsonDecode['message'],
+			);
 			$this->Messagemodel->sentMessage($arr);
 		}
 	}
-	public function getMessage(){
-		if(isset($_POST['data']) && isset($_SESSION['uniqueid'])){
-			$data['data'] = $this->Messagemodel->getmessage($_POST['data']);
-			$data['image'] = $_POST['image'];
-			$this->load->view('message/sampleMessageShow',$data);
+
+	public function sendImage()
+	{
+		if (isset($_POST['datetime']) && isset($_SESSION['uniqueid'])) {
+			$uniq = $_SESSION['uniqueid'];
+
+			// Get the image file
+			$file = $_FILES['file'];
+			$file_name = $file['name'];
+			$file_tmpname = $file['tmp_name'];
+			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+			$file_new_name = substr(md5(microtime()), rand(0, 25), 8);
+			$file_upload_name = $file_new_name . "." . $extension;
+
+			// Check if the file is an image
+			$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+			if (in_array($extension, $allowed_extensions)) {
+				// Move the uploaded file to the destination directory
+				move_uploaded_file($file_tmpname, "upload/messages/images/" . $file_upload_name);
+
+				$arr = array(
+					'time' => $_POST['datetime'],
+					'sender_message_id' => $uniq,
+					'receiver_message_id' => $_POST['uniq'],
+					'image_path' => $file_upload_name,
+				);
+
+				$this->Messagemodel->sentMessage($arr);
+
+				echo "success";
+			} else {
+				echo "Not allowed.";
+			}
+		} else {
+			echo "Error";
 		}
 	}
-	public function updateBio(){
-		if($_POST){
+
+	public function sendFile()
+	{
+		if (isset($_POST['datetime']) && isset($_SESSION['uniqueid'])) {
+			$uniq = $_SESSION['uniqueid'];
+
+			// Get the file
+			$file = $_FILES['file'];
+			$file_name = $file['name'];
+			$file_tmpname = $file['tmp_name'];
+			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+			$file_new_name = substr(md5(microtime()), rand(0, 25), 8);
+			$file_upload_name = $file_new_name . "." . $extension;
+
+			// Move the uploaded file to the destination directory
+			move_uploaded_file($file_tmpname, "upload/messages/files/" . $file_upload_name);
+
+			$arr = array(
+				'time' => $_POST['datetime'],
+				'sender_message_id' => $uniq,
+				'receiver_message_id' => $_POST['uniq'],
+				'file_path' => $file_upload_name,
+			);
+
+			$this->Messagemodel->sentMessage($arr);
+
+			echo "success";
+		} else {
+			echo "Error";
+		}
+	}
+
+	public function getMessage()
+	{
+		if (isset($_POST['data']) && isset($_SESSION['uniqueid'])) {
+			$data['data'] = $this->Messagemodel->getmessage($_POST['data']);
+			$data['image'] = $_POST['image'];
+			$this->load->view('message/sampleMessageShow', $data);
+		}
+	}
+	public function updateBio()
+	{
+		if ($_POST) {
 			$this->Messagemodel->updateBio($_POST);
 		}
 	}
-	public function blockUser(){
-		if(isset($_POST['time']) && isset($_POST['uniq'])){
+	public function blockUser()
+	{
+		if (isset($_POST['time']) && isset($_POST['uniq'])) {
 			$arr = array(
 				'blocked_from' => $_SESSION['uniqueid'],
 				'blocked_to' => $_POST['uniq'],
@@ -106,14 +188,16 @@ class Message extends CI_controller{
 			return 1;
 		}
 	}
-	public function getBlockUserData(){
-		if(isset($_POST['uniq'])){
-			$res = $this->Messagemodel->getBlockUserData($_POST['uniq'],$_SESSION['uniqueid']);
+	public function getBlockUserData()
+	{
+		if (isset($_POST['uniq'])) {
+			$res = $this->Messagemodel->getBlockUserData($_POST['uniq'], $_SESSION['uniqueid']);
 			print_r(json_encode($res));
 		}
 	}
-	public function unBlockUser(){
-		if(isset($_POST['uniq'])){
+	public function unBlockUser()
+	{
+		if (isset($_POST['uniq'])) {
 			$from = $_SESSION['uniqueid'];
 			$to = $_POST['uniq'];
 			$this->Messagemodel->unBlockUser($from, $to);
