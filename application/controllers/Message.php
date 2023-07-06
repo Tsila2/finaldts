@@ -29,10 +29,9 @@ class Message extends CI_controller
 				$unique_id = $data['data'][$i]['unique_id'];
 				$msg = $this->Messagemodel->getLastMessage($unique_id);
 				for ($j = 0; $j < count($msg); $j++) {
-
-					$time = explode(" ", $msg[0]['time']); //00:00:00.0000
-					$time = explode(".", $time[1]); //00:00:00
-					$time = explode(":", $time[0]); //00 00 00
+					$time = explode(" ", $msg[0]['time']); // 00:00:00.0000
+					$time = explode(".", $time[1]); // 00:00:00
+					$time = explode(":", $time[0]); // 00 00 00
 					if ((int) $time[0] == 12) {
 						$time = $time[0] . ":" . $time[1] . " PM";
 					} elseif ((int) $time[0] > 12) {
@@ -41,16 +40,13 @@ class Message extends CI_controller
 						$time = $time[0] . ":" . $time[1] . " AM";
 					}
 
-					array_push(
-						$data['last_msg'],
-						array(
-							'message' => $msg[0]['message'],
-							'image_path' => $msg[0]['image_path'],
-							'file_path' => $msg[0]['file_path'],
-							'sender_id' => $msg[0]['sender_message_id'],
-							'receiver_id' => $msg[0]['receiver_message_id'],
-							'time' => $time //00:00
-						)
+					$data['last_msg'][] = array(
+						'message' => $msg[0]['message'],
+						'image_path' => $msg[0]['image_path'],
+						'file_path' => $msg[0]['file_path'],
+						'sender_id' => $msg[0]['sender_message_id'],
+						'receiver_id' => $msg[0]['receiver_message_id'],
+						'time' => $time, // 00:00
 					);
 				}
 			}

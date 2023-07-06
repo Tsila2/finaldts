@@ -1,7 +1,6 @@
 <?php
 $count = count($data);
 for ($i = 0; $i < $count; $i++) {
-
 	if ($data[$i]['user_status'] == 'active') {
 		?>
 		<div class='innerBox'>

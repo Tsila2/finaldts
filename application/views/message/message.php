@@ -12,14 +12,13 @@ if (isset($_SESSION)) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-		integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo site_url('assets/fontawesome-5.15.3/css/all.css'); ?>">
+	<link rel="stylesheet" href="<?php echo site_url('assets/css/bootstrap-4.5.2.min.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/message/messagestyle.css'); ?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+	<script src="<?php echo site_url('assets/js/pace.min.js'); ?>"></script>
 	<link rel="stylesheet" href="<?php echo site_url('assets/css/message/loading-bar.css'); ?>">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="<?php echo site_url('assets/js/popper-1.16.0.js'); ?>"></script>
 
 	<title>
 		<?php echo $title; ?>
@@ -166,9 +165,9 @@ if (isset($_SESSION)) {
 			</button>
 		</form>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+	<script src="<?php echo site_url('assets/js/jquery-3.5.1.min.js') ?>"></script>
+	<script src="<?php echo site_url('assets/js/bootstrap-4.5.2.min.js') ?>"></script>
+	<script src="<?php echo site_url('assets/js/gsap-3.6.1.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url('assets/js/message/main.js') ?>"></script>
 
 	<script>
