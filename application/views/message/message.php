@@ -170,14 +170,14 @@ if (isset($_SESSION)) {
 	<script src="<?php echo site_url('assets/js/gsap-3.6.1.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url('assets/js/message/main.js') ?>"></script>
 
-	<!-- <script>
+	<script>
 		// Function to handle tab closing event
 		window.onbeforeunload = function () {
 			var date = new Date();
 			date = new Date(date);
 			date = date.toLocaleString();
 			$.ajax({
-				url: 'logout',
+				url: 'close',
 				type: 'post',
 				data: "date=" + date,
 				success: function (res) {
@@ -185,7 +185,7 @@ if (isset($_SESSION)) {
 				}
 			})
 		};
-	</script> -->
+	</script>
 
 </body>
 

@@ -57,6 +57,7 @@ $route['insert'] = 'Authenticate/signupData';
 $route['search'] = 'Authenticate/loginData';
 $route['message'] = 'Message';
 $route['logout'] = 'Message/logout';
+$route['close'] = 'Message/close';
 $route['sent'] = 'Message/sendMessage';
 $route['sent/image'] = 'Message/sendImage';
 $route['sent/file'] = 'Message/sendFile';

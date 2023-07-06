@@ -110,6 +110,21 @@ class Message extends CI_controller
 		echo base_url();
 	}
 
+	public function close()
+	{
+		$date = $_POST['date'];
+		$this->load->helper('url');
+		$this->Messagemodel->logoutUser('deactive', $date);
+
+		unset(
+			$_SESSION['uniqueid'],
+			$_SESSION['username'],
+			$_SESSION['image']
+			);
+
+		echo base_url();
+	}
+
 	public function setNoMessage()
 	{
 		$data['image'] = $_POST['image'];
