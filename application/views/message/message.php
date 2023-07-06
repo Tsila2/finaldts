@@ -173,16 +173,17 @@ if (isset($_SESSION)) {
 	<script>
 		// Function to handle tab closing event
 		window.onbeforeunload = function () {
-			// Send an AJAX request to notify the server that the tab is being closed
+			var date = new Date();
+			date = new Date(date);
+			date = date.toLocaleString();
 			$.ajax({
-				type: "POST",
-				url: "<?php echo base_url('authenticate/tab_close_handler'); ?>",
-				data: {
-					active_tab: 'closed',
-					// Include any other relevant data that you may need
-				},
-				async: false, // Make the request synchronous to ensure it is sent before the tab closes
-			});
+				url: 'logout',
+				type: 'post',
+				data: "date=" + date,
+				success: function (res) {
+					location.href = res;
+				}
+			})
 		};
 	</script>
 

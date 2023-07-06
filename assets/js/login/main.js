@@ -55,7 +55,7 @@ $(document).ready(function(){
 						$('#form_login').trigger('reset');
 						remove_alert();
 						// console.log(res);
-						location.href = "./message";
+						location.href = "message";
 					}else{
 						error_message('Invalid email or password');
 						email.focus();

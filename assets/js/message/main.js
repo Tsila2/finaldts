@@ -137,19 +137,22 @@ $(document).ready(function () {
 			getLastSeen(last_seen);
 		}
 	}
+
 	function getLastSeen(data) {
 		var { hours, min, sec } = calculateTime(data);
+		var formattedDate = formatDate(data);
+
 		if (days > 0) {
-			$('#name_last_seen p').html(`Last active on ${data}`);
-		}
-		else {
-			(hours > 0) ? $('#name_last_seen p').html(`Last seen at ${hours} hours ${min} minutes ago`) :
-				(min > 0) ? $('#name_last_seen p').html("Last seen at " + min + " minutes ago") :
-					$('#name_last_seen p').html("Last seen just now");
+			$('#name_last_seen p').html(`Last active on ${formattedDate}`);
+		} else {
+			(hours > 0) ? $('#name_last_seen p').html(`Last seen ${hours} hours ${min} minutes ago`) :
+				(min > 0) ? $('#name_last_seen p').html(`Last seen ${min} minutes ago`) :
+					$('#name_last_seen p').html(`Last seen just now`);
 		}
 	}
+
 	function calculateTime(data) {
-		oldDate = new Date(data).getTime();
+		oldDate = new Date(data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3")).getTime();
 		newDate = new Date().getTime();
 		differ = newDate - oldDate;
 		days = Math.floor(differ / (1000 * 60 * 60 * 24));
@@ -163,6 +166,20 @@ $(document).ready(function () {
 		};
 		return obj;
 	}
+
+	function formatDate(data) {
+		var dateParts = data.split(" ")[0].split("/");
+		var timePart = data.split(" ")[1];
+
+		var year = dateParts[2];
+		var month = ('0' + dateParts[1]).slice(-2);
+		var day = ('0' + dateParts[0]).slice(-2);
+
+		var formattedDate = `${year}-${month}-${day} ${timePart}`;
+
+		return formattedDate;
+	}
+
 	//sending unique_id which is clicked for messages
 	function sendUserUniqIDForMsg(uniq_id, bg_image) {
 		$.post('getmessage', { data: uniq_id, image: bg_image }, function (data) {
@@ -233,6 +250,7 @@ $(document).ready(function () {
 		var date = new Date();
 		date = new Date(date);
 		date = date.toLocaleString();
+		console.log(date);
 		$.ajax({
 			url: 'logout',
 			type: 'post',

@@ -17,19 +17,6 @@ class Authenticate extends CI_Controller
 		$this->load->view('auth/signup');
 	}
 
-	public function tab_close_handler()
-	{
-		// Check if the tab is active or closed
-		if (isset($_POST['active_tab'])) {
-			$active_tab = $_POST['active_tab'];
-			if ($active_tab === 'closed') {
-				$date = new DateTime();
-				$formatted_date = $date->format('Y-m-d H:i:s');
-				$this->Messagemodel->logoutUser('deactive', $formatted_date);
-			}
-		}
-	}
-
 	public function signupData()
 	{
 		$data = $this->input->post();
