@@ -17,7 +17,7 @@ class Messagemodel extends CI_model
 
 			$sql = "SELECT u.*, MAX(um.time) AS last_message_time
                 FROM user u
-                LEFT JOIN user_messages um ON (u.id = um.sender_message_id OR u.id = um.receiver_message_id)
+                LEFT JOIN user_messages um ON (u.unique_id = um.sender_message_id OR u.unique_id = um.receiver_message_id)
                 WHERE u.unique_id != ?
                 GROUP BY u.id
                 ORDER BY last_message_time DESC";
