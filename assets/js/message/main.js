@@ -52,7 +52,7 @@ $(document).ready(function () {
 				}
 			})
 			$('.innerBox').click(function () {
-
+				$('#search').val('');
 				barIn();
 				$('.chatting_section').css('display', '');
 
@@ -76,12 +76,14 @@ $(document).ready(function () {
 					sendUserUniqIDForMsg(unique_id, bg_image);
 				}, 1000);
 			})
-			$('.innerBox').mouseover(function () {
-				clearInterval(inter2);
-			})
-			$('.innerBox').mouseleave(function () {
-				inter2 = setInterval(getUserList, 1000);
-			})
+			// $('.innerBox').mouseover(function () {
+			// 	console.log("1");
+			// 	clearInterval(inter2);
+			// })
+			// $('.innerBox').mouseleave(function () {
+			// 	console.log("2");
+			// 	inter2 = setInterval(getUserList, 1000);
+			// })
 		})
 	}
 	function getUserDetails(uniq_id) {
@@ -206,7 +208,7 @@ $(document).ready(function () {
 		if (val.length > 0) {
 			clearInterval(inter2);
 			for (let i = 0; i < user.length; i++) {
-				nameVal = name[i].innerHTML
+				nameVal = name[i].innerHTML;
 				if (nameVal.toLowerCase().indexOf(val) > -1) {
 					user[i].style.display = '';
 				} else {
@@ -217,6 +219,7 @@ $(document).ready(function () {
 			inter2 = setInterval(getUserList, 1000);
 		}
 	});
+
 	function getCharLength() {
 		const MAX_LENGTH = 200;
 		var len = document.getElementById('messageText').value.length;
@@ -364,7 +367,7 @@ $(document).ready(function () {
 					processData: false,
 					success: function (response) {
 						// Handle the upload success
-						if(response === "Not allowed."){
+						if (response === "Not allowed.") {
 							alert("Format non pris en charge");
 						}
 						$('#imageUpload').val('');
@@ -386,7 +389,7 @@ $(document).ready(function () {
 		if (file) {
 			// Process the file
 			// Example: Perform any required operations with the file data
-	
+
 			var d = new Date(),
 				messageHour = d.getHours(),
 				messageMinute = d.getMinutes(),
@@ -395,12 +398,12 @@ $(document).ready(function () {
 				messageDate = d.getDate(),
 				messageMonth = d.getMonth() + 1,
 				actualDateTime = `${messageYear}-${messageMonth}-${messageDate} ${messageHour}:${messageMinute}:${messageSec}`;
-	
+
 			var data = new FormData();
 			data.append('file', file);
 			data.append('datetime', actualDateTime);
 			data.append('uniq', unique_id);
-	
+
 			$.ajax({
 				url: 'sent/file',
 				type: 'POST',
@@ -420,7 +423,7 @@ $(document).ready(function () {
 			});
 		}
 	});
-	
+
 
 
 
