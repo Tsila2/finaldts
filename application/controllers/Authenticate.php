@@ -10,7 +10,40 @@ class Authenticate extends CI_Controller
 	{
 		$data['title'] = "Se connecter";
 		$this->load->view('auth/login', $data);
+
+		// Check if login cookies exist
+		if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
+			$email = $_COOKIE['login_email'];
+			$password = $_COOKIE['login_password'];
+
+			$data = array(
+				'email' => $email,
+				'pass' => $password
+			);
+
+			$res = $this->Auth->login($data);
+
+			if ($res != 0) {
+				$username = $res[0]['user_fname'] . " " . $res[0]['user_lname'];
+				$image = $res[0]['user_avtar'];
+				$uniqueid = $res[0]['unique_id'];
+
+				$session_array = array(
+					'username' => $username,
+					'image' => $image,
+					'uniqueid' => $uniqueid
+				);
+
+				$this->load->model('Messagemodel');
+				$this->session->set_userdata($session_array);
+				$this->Messagemodel->logoutUser('active', '');
+
+				// Redirect to the desired page after successful automatic login
+				redirect('message');
+			}
+		}
 	}
+
 	public function signup()
 	{
 		$this->load->helper('url');
@@ -76,24 +109,33 @@ class Authenticate extends CI_Controller
 	public function loginData()
 	{
 		if (isset($_POST['txt_email']) && isset($_POST['txt_pass'])) {
+			$email = $_POST['txt_email'];
+			$password = $_POST['txt_pass'];
+
 			$data = array(
-				'email' => $_POST['txt_email'],
-				'pass' => $_POST['txt_pass']
+				'email' => $email,
+				'pass' => $password
 			);
+
 			$res = $this->Auth->login($data);
+
 			if ($res != 0) {
 				$username = $res[0]['user_fname'] . " " . $res[0]['user_lname'];
 				$image = $res[0]['user_avtar'];
 				$uniqueid = $res[0]['unique_id'];
+
 				$session_array = array(
 					'username' => $username,
 					'image' => $image,
 					'uniqueid' => $uniqueid
 				);
+
 				$this->load->model('Messagemodel');
 				$this->session->set_userdata($session_array);
 				$this->Messagemodel->logoutUser('active', '');
 
+				// Store the login data in storage (e.g., cookies, local storage, etc.)
+				$this->storeLoginData($email, $password);
 
 				print_r($res);
 			} else {
@@ -101,6 +143,16 @@ class Authenticate extends CI_Controller
 			}
 		}
 	}
+
+	// Function to store login data in storage
+	private function storeLoginData($email, $password)
+	{
+		// Store the email and password in the desired storage (e.g., cookies, local storage, etc.)
+		// Example using cookies:
+		setcookie('login_email', $email, time() + (86400 * 30), '/'); // Cookie expires in 30 days
+		setcookie('login_password', $password, time() + (86400 * 30), '/'); // Cookie expires in 30 days
+	}
+
 }
 
 ?>

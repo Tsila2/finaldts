@@ -8,7 +8,39 @@ class Message extends CI_controller
 			$data['title'] = "Message";
 			$this->load->view('message/message', $data);
 		} else {
-			$this->load->view('error/error');
+			// Check if login cookies exist
+			if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
+				$email = $_COOKIE['login_email'];
+				$password = $_COOKIE['login_password'];
+
+				$data = array(
+					'email' => $email,
+					'pass' => $password
+				);
+
+				$res = $this->Auth->login($data);
+
+				if ($res != 0) {
+					$username = $res[0]['user_fname'] . " " . $res[0]['user_lname'];
+					$image = $res[0]['user_avtar'];
+					$uniqueid = $res[0]['unique_id'];
+
+					$session_array = array(
+						'username' => $username,
+						'image' => $image,
+						'uniqueid' => $uniqueid
+					);
+
+					$this->load->model('Messagemodel');
+					$this->session->set_userdata($session_array);
+					$this->Messagemodel->logoutUser('active', '');
+
+					// Redirect to the desired page after successful automatic login
+					redirect('message');
+				}
+			} else {
+				redirect('/');
+			}
 		}
 	}
 	public function ownerDetails()
@@ -64,13 +96,20 @@ class Message extends CI_controller
 		$date = $_POST['date'];
 		$this->load->helper('url');
 		$this->Messagemodel->logoutUser('deactive', $date);
+
+		// Clear login cookies
+		setcookie('login_email', '', time() - 3600, '/');
+		setcookie('login_password', '', time() - 3600, '/');
+
 		unset(
 			$_SESSION['uniqueid'],
 			$_SESSION['username'],
 			$_SESSION['image']
 			);
+
 		echo base_url();
 	}
+
 	public function setNoMessage()
 	{
 		$data['image'] = $_POST['image'];
