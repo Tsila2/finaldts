@@ -53,7 +53,7 @@ $(document).ready(function () {
 			})
 			$('.innerBox').click(function () {
 				$('#search').val('');
-				// barIn();
+				barIn();
 				$('.chatting_section').css('display', '');
 
 				unique_id = $(this).find('#user_avtar').children('#hidden_id').val();
