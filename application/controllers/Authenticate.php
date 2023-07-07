@@ -8,11 +8,9 @@ class Authenticate extends CI_Controller
 	}
 	public function login()
 	{
-		$data['title'] = "Se connecter";
-		$this->load->view('auth/login', $data);
-
-		// Check if login cookies exist
-		if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
+		if (isset($_SESSION['uniqueid'])) {
+			redirect('message');
+		} else if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
 			$email = $_COOKIE['login_email'];
 			$password = $_COOKIE['login_password'];
 
@@ -41,6 +39,9 @@ class Authenticate extends CI_Controller
 				// Redirect to the desired page after successful automatic login
 				redirect('message');
 			}
+		} else {
+			$data['title'] = "Se connecter";
+			$this->load->view('auth/login', $data);
 		}
 	}
 

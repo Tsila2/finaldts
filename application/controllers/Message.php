@@ -3,46 +3,54 @@ class Message extends CI_controller
 {
 	public function index()
 	{
-		if (isset($_SESSION['image'])) {
-			$data['data'] = $this->Messagemodel->ownerDetails();
-			$data['title'] = "Message";
-			$this->load->view('message/message', $data);
-		} else {
-			// Check if login cookies exist
-			if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
-				$email = $_COOKIE['login_email'];
-				$password = $_COOKIE['login_password'];
+		if (isset($_SESSION['uniqueid'])) {
+			$this->loadMessageView();
+		} else if (isset($_COOKIE['login_email']) && isset($_COOKIE['login_password'])) {
+			$email = $_COOKIE['login_email'];
+			$password = $_COOKIE['login_password'];
 
-				$data = array(
-					'email' => $email,
-					'pass' => $password
+			$data = array(
+				'email' => $email,
+				'pass' => $password
+			);
+
+			$res = $this->Auth->login($data);
+
+			if ($res != 0) {
+				$username = $res[0]['user_fname'] . " " . $res[0]['user_lname'];
+				$image = $res[0]['user_avtar'];
+				$uniqueid = $res[0]['unique_id'];
+
+				$session_array = array(
+					'username' => $username,
+					'image' => $image,
+					'uniqueid' => $uniqueid
 				);
 
-				$res = $this->Auth->login($data);
+				$this->load->model('Messagemodel');
+				$this->session->set_userdata($session_array);
+				$this->Messagemodel->logoutUser('active', '');
 
-				if ($res != 0) {
-					$username = $res[0]['user_fname'] . " " . $res[0]['user_lname'];
-					$image = $res[0]['user_avtar'];
-					$uniqueid = $res[0]['unique_id'];
+				// Clear cookies to avoid multiple refreshes
+				unset($_COOKIE['login_email']);
+				unset($_COOKIE['login_password']);
+				setcookie('login_email', '', time() - 3600);
+				setcookie('login_password', '', time() - 3600);
 
-					$session_array = array(
-						'username' => $username,
-						'image' => $image,
-						'uniqueid' => $uniqueid
-					);
-
-					$this->load->model('Messagemodel');
-					$this->session->set_userdata($session_array);
-					$this->Messagemodel->logoutUser('active', '');
-
-					// Redirect to the desired page after successful automatic login
-					redirect('message');
-				}
-			} else {
-				redirect('/');
+				$this->loadMessageView();
 			}
+		} else {
+			redirect('/');
 		}
 	}
+
+	private function loadMessageView()
+	{
+		$data['data'] = $this->Messagemodel->ownerDetails();
+		$data['title'] = "Message";
+		$this->load->view('message/message', $data);
+	}
+
 	public function ownerDetails()
 	{
 		$res = $this->Messagemodel->ownerDetails();

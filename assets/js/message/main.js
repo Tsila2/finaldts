@@ -232,6 +232,8 @@ $(document).ready(function () {
 					user[i].style.display = 'none';
 				}
 			}
+			console.log('Called');
+			clearInterval(inter2);
 		} else {
 			inter2 = setInterval(getUserList, 1000);
 		}

@@ -172,19 +172,13 @@ if (isset($_SESSION)) {
 
 	<script>
 		// Function to handle tab closing event
-		window.onbeforeunload = function () {
-			var date = new Date();
-			date = new Date(date);
-			date = date.toLocaleString();
-			$.ajax({
-				url: 'close',
-				type: 'post',
-				data: "date=" + date,
-				success: function (res) {
-					location.href = res;
-				}
-			})
-		};
+		window.addEventListener('beforeunload', function (event) {
+			var date = new Date().toLocaleString();
+			var data = new FormData();
+			data.append('date', date);
+
+			navigator.sendBeacon('close', data);
+		});
 	</script>
 
 </body>
