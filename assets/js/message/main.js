@@ -47,7 +47,7 @@ $(document).ready(function () {
 					owenerProfileBio.classList.remove('text-warning');
 					owenerProfileBio.innerHTML = (bio.length > 28) ? bio.slice(0, 28) + "..." : bio;
 				} else {
-					owenerProfileBio.innerHTML = "Profile isn't completed";
+					owenerProfileBio.innerHTML = "Profil non complété";
 					owenerProfileBio.classList.add('text-warning');
 				}
 			})
@@ -108,29 +108,29 @@ $(document).ready(function () {
 		$('#input_user').val(`${avtar}`);
 
 		$('#details_of_user h5').html(user_name);
-		(data[0]['bio'].length > 1) ? $('#details_of_bio').html(data[0]['bio']) : $('#details_of_bio').html("--Not Given--");
+		(data[0]['bio'].length > 1) ? $('#details_of_bio').html(data[0]['bio']) : $('#details_of_bio').html("--Non spécifié--");
 
 		$('#details_of_created').html(`Created at : ${data[0]['created_at']}`);
 		$('#details_of_email').html(`<span><i class="fas fa-envelope text-dark pr-2"></i></span>${data[0]['user_email']}`);
 
 		(data[0]['dob'].length > 1) ?
 			$('#details_of_birthday').html(`<span><i class="fas fa-birthday-cake text-dark pr-2"></i></span>${data[0]['dob']}`) :
-			$('#details_of_birthday').html(`<span><i class="fas fa-birthday-cake text-dark pr-2"></i></span>--Not Given--`);
+			$('#details_of_birthday').html(`<span><i class="fas fa-birthday-cake text-dark pr-2"></i></span>--Non spécifié--`);
 
 		(data[0]['phone'].length > 1) ?
 			$('#details_of_mobile').html(`<span><i class="fas fa-mobile-alt text-dark pr-2"></i></span>${data[0]['phone']}`) :
-			$('#details_of_mobile').html(`<span><i class="fas fa-mobile-alt text-dark pr-2"></i></span>--Not Given--`);
+			$('#details_of_mobile').html(`<span><i class="fas fa-mobile-alt text-dark pr-2"></i></span>--Non spécifié--`);
 
 		(data[0]['address'].length > 1) ?
 			$('#details_of_location').html(`<span><i class="fas fa-map-marker-alt text-dark pr-2"></i></span>${data[0]['address']}`) :
-			$('#details_of_location').html(`<span><i class="fas fa-map-marker-alt text-dark pr-2"></i></span>--Not Given--`);
+			$('#details_of_location').html(`<span><i class="fas fa-map-marker-alt text-dark pr-2"></i></span>--Non spécifié--`);
 
 
 	}
 
 	function offlineOnlineIndicator(data, last_seen) {
 		if (data == 'active') {
-			$('#name_last_seen p').html("Active now");
+			$('#name_last_seen p').html("Actif");
 			$("#chat_profile_image #online").show();
 		} else {
 			$("#chat_profile_image #online").hide();
@@ -143,11 +143,11 @@ $(document).ready(function () {
 		var formattedDate = formatDate(data);
 
 		if (days > 0) {
-			$('#name_last_seen p').html(`Last active on ${formattedDate}`);
+			$('#name_last_seen p').html(`Actif Il y a ${formattedDate}`);
 		} else {
-			(hours > 0) ? $('#name_last_seen p').html(`Last seen ${hours} hours ${min} minutes ago`) :
-				(min > 0) ? $('#name_last_seen p').html(`Last seen ${min} minutes ago`) :
-					$('#name_last_seen p').html(`Last seen just now`);
+			(hours > 0) ? $('#name_last_seen p').html(`Actif Il y a ${hours} heures ${min} minutes`) :
+				(min > 0) ? $('#name_last_seen p').html(`Actif Il y a ${min} minutes`) :
+					$('#name_last_seen p').html(`Actif Il y a un instant`);
 		}
 	}
 
@@ -337,7 +337,7 @@ $(document).ready(function () {
 			messageDate = d.getDate(),
 			messageMonth = d.getMonth() + 1,
 			actualDateTime = `${messageYear}-${messageMonth}-${messageDate} ${messageHour}:${messageMinute}:${messageSec}`;
-		if (this.innerHTML == "Block User") {
+		if (this.innerHTML == "Bloquer l\'utilisateur") {
 			$.post('Message/blockUser', { time: actualDateTime, uniq: unique_id })
 		} else {
 			$.post('Message/unBlockUser', { uniq: unique_id })
@@ -394,7 +394,7 @@ $(document).ready(function () {
 					},
 					error: function (xhr, status, error) {
 						// Handle the upload error
-						console.error('Image upload failed:', error);
+						console.error('Échec du téléchargement de l\'image :', error);
 					}
 				});
 			};
@@ -438,7 +438,7 @@ $(document).ready(function () {
 				},
 				error: function (xhr, status, error) {
 					// Handle the upload error
-					console.error('File upload failed:', error);
+					console.error('Échec du téléchargement du fichier:', error);
 				}
 			});
 		}
@@ -455,15 +455,15 @@ $(document).ready(function () {
 				for (var i = 0; i < jsonData.length; i++) {
 					if (jsonData[i]['blocked_from'] == unique_id) {
 						$('#messageText').attr('disabled', '');
-						$('#messageText').attr('placeholder', 'This user is not receiving messages at this time.');
+						$('#messageText').attr('placeholder', 'Cet utilisateur ne reçoit pas de messages en ce moment.');
 						$('#messageText').css('cursor', 'no-drop');
-						$('#btn_block').html('Block User');
+						$('#btn_block').html('Bloquer l\'utilisateur');
 						$('#send_message').attr('disabled', '');
 						$('#send_message').css('cursor', 'no-drop');
 					} else {
 						$('#messageText').attr('disabled', '');
-						$('#messageText').attr('placeholder', 'You have blocked this user');
-						$('#btn_block').html('Unblock User');
+						$('#messageText').attr('placeholder', 'Vous avez bloqué cet utilisateur');
+						$('#btn_block').html('Débloquer l\'utilisateur');
 						$('#messageText').css('cursor', 'no-drop');
 
 						$('#send_message').attr('disabled', '');
@@ -472,15 +472,15 @@ $(document).ready(function () {
 				}
 			} else if (jsonData.length == 2) {
 				$('#messageText').attr('disabled', '');
-				$('#messageText').attr('placeholder', 'You both are blocked each other');
-				$('#btn_block').html('Unblock User');
+				$('#messageText').attr('placeholder', 'Vous vous êtes bloqués mutuellement');
+				$('#btn_block').html('Débloquer l\'utilisateur');
 				$('#messageText').css('cursor', 'no-drop');
 				$('#send_message').attr('disabled', '');
 				$('#send_message').css('cursor', 'no-drop');
 			} else {
 				$('#messageText').removeAttr('disabled');
-				$('#messageText').attr('placeholder', 'Start Typing. . . .');
-				$('#btn_block').html('Block User');
+				$('#messageText').attr('placeholder', 'Commencez à taper...');
+				$('#btn_block').html('Bloquer l\'utilisateur');
 				$('#messageText').css('cursor', '');
 				$('#send_message').removeAttr('disabled');
 				$('#send_message').css('cursor', '');

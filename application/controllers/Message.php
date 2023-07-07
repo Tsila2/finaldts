@@ -47,7 +47,7 @@ class Message extends CI_controller
 	private function loadMessageView()
 	{
 		$data['data'] = $this->Messagemodel->ownerDetails();
-		$data['title'] = "Message";
+		$data['title'] = "E-Resaka - Message";
 		$this->load->view('message/message', $data);
 	}
 
@@ -62,7 +62,7 @@ class Message extends CI_controller
 		$data['last_msg'] = array();
 		$this->load->helper('url');
 		if (!is_array($data['data'])) {
-			echo "<p class='text-center'>No user available.</p>";
+			echo "<p class='text-center'>Aucun utilisateur disponible. Veuillez rafraîchir la page !</p>";
 		} else {
 			$count = count($data['data']);
 			for ($i = 0; $i < $count; $i++) {
@@ -188,7 +188,7 @@ class Message extends CI_controller
 				echo "Not allowed.";
 			}
 		} else {
-			echo "Error";
+			echo "error";
 		}
 	}
 

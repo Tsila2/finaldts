@@ -44,11 +44,11 @@ if (isset($_SESSION)) {
 						<i class="fas fa-edit" id="edit_icon"></i>
 					</div>
 					<a class="text-decoration-none" href="" id="logout" style="color:#e86663;"><i
-							class="fa fa-power-off"></i> Logout</a>
+							class="fa fa-power-off"></i> Déconnexion</a>
 				</div>
 			</div>
 			<div id="search_box_container" class="py-3">
-				<input type="text" name="txt_search" class="form-control" autocomplete="off" placeholder="Search User"
+				<input type="text" name="txt_search" class="form-control" autocomplete="off" placeholder="Rechercher un utilisateur"
 					id="search">
 			</div>
 			<hr />
@@ -58,10 +58,9 @@ if (isset($_SESSION)) {
 		<div id="chatbox">
 			<div id="data_container" class="">
 				<div id="bg_image"></div>
-				<h2 class="mt-0">Hi There! Welcome To</h2>
-				<h2>Real-Time Chat Application</h2>
-				<p class="text-center my-2">Connect to your device via Internet. Remember that you <br> must have a
-					stable Internet Connection for a<br> greater experience.</p>
+				<h2 class="mt-0">Salut ! Bienvenue sur</h2>
+				<h2>E-Resaka</h2>
+				<p class="text-center my-2">Connectez-vous à votre appareil via Internet. N'oubliez pas que vous <br> devez disposer d'une connexion Internet stable pour une<br> meilleure expérience.</p>
 			</div>
 			<div class="chatting_section" id="chat_area" style="display: none">
 				<div id="header" class="py-2">
@@ -105,7 +104,7 @@ if (isset($_SESSION)) {
 					<div id="textBox_attachment_emoji_container" style="display: flex">
 						<div id="text_box_message">
 							<textarea maxlength="200" name="txt_message" id="messageText" class="form-control no-resize"
-								placeholder="Type your message"></textarea>
+								placeholder="Tapez votre message"></textarea>
 						</div>
 						<div id="text_counter">
 							<p id="count_text" class="m-0 p-0"></p>
@@ -134,7 +133,7 @@ if (isset($_SESSION)) {
 				<p class="text-justify" id="details_of_email"><span></p>
 				<p class="text-justify" id="details_of_location"><span></p>
 			</div>
-			<button class="btn btn-danger" id="btn_block">Block User</button>
+			<button class="btn btn-danger" id="btn_block">Bloquer l'utilisateur</button>
 		</div>
 	</section>
 	<div id="update_container">
@@ -149,19 +148,19 @@ if (isset($_SESSION)) {
 			</div>
 			<div class="form-group">
 				<label>Contact Number</label>
-				<input type="text" maxlength="10" name="txt_phone" placeholder="Write your mobile number" id="phone_num"
+				<input type="text" maxlength="10" name="txt_phone" placeholder="Écrivez votre numéro de téléphone mobile" id="phone_num"
 					class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Address</label>
-				<input type="text" name="txt_addr" id="address" placeholder="Write your address" class="form-control">
+				<input type="text" name="txt_addr" id="address" placeholder="Écrivez votre adresse" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Bio</label>
-				<textarea name="bio" class="" id="update_bio" placeholder="Write your bio here.."></textarea>
+				<textarea name="bio" class="" id="update_bio" placeholder="Écrivez votre biographie ici..."></textarea>
 			</div>
 			<button class="btn btn-block" id="update_btn" style="border-radius:0px;">
-				<span>Save Changes</span>
+				<span>Enregistrer les modifications</span>
 			</button>
 		</form>
 	</div>

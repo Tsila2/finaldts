@@ -38,9 +38,9 @@ for ($i = 0; $i < $count; $i++) {
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
 											// Extract the name from the message if it's a link
 											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-											$output = "You : " . $matches[1];
+											$output = "Vous : " . $matches[1];
 										} else {
-											$output = "You : " . $last_msg[$j]['message'];
+											$output = "Vous : " . $last_msg[$j]['message'];
 										}
 
 								} else {
@@ -110,9 +110,9 @@ for ($i = 0; $i < $count; $i++) {
 										if (strpos($last_msg[$j]['message'], '<a href=') !== false) {
 											// Extract the name from the message if it's a link
 											preg_match('/>(.*?)<\/a>/', $last_msg[$j]['message'], $matches);
-											$output = "You : " . $matches[1];
+											$output = "Vous : " . $matches[1];
 										} else {
-											$output = "You : " . $last_msg[$j]['message'];
+											$output = "Vous : " . $last_msg[$j]['message'];
 										}
 
 								} else {

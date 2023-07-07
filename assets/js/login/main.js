@@ -10,7 +10,7 @@ let mail_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9
 
 const error_message = (message) => {
 	alert.classList.remove('d-none');
-	alert.innerHTML = "<strong>Error!</strong> "+message;
+	alert.innerHTML = "<strong>Erreur!</strong> "+message;
 }
 const remove_alert = () => {
 	alert.classList.add('d-none');
@@ -23,7 +23,7 @@ const validate_otherField = () => {
 		if(field_arr[i].value != "" ){
 			remove_alert();
 		}else{
-			error_message("All fields are required");
+			error_message("Tous les champs sont obligatoires");
 			field_arr[i].focus();
 			break;
 		}
@@ -57,7 +57,7 @@ $(document).ready(function(){
 						// console.log(res);
 						location.href = "message";
 					}else{
-						error_message('Invalid email or password');
+						error_message('Adresse e-mail ou mot de passe invalide');
 						email.focus();
 					}
 				}

@@ -40,15 +40,16 @@ class Authenticate extends CI_Controller
 				redirect('message');
 			}
 		} else {
-			$data['title'] = "Se connecter";
+			$data['title'] = "E-Resaka - Se connecter";
 			$this->load->view('auth/login', $data);
 		}
 	}
 
 	public function signup()
 	{
+		$data['title'] = "E-Resaka - S'inscrire";
 		$this->load->helper('url');
-		$this->load->view('auth/signup');
+		$this->load->view('auth/signup', $data);
 	}
 
 	public function signupData()

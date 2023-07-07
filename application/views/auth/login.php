@@ -17,7 +17,7 @@
 			<div class="row form_row">
 				<div class="col-lg-4 bg-white px-3 py-3" id="form_col">
 					<form autocomplete="off" id="form_login">
-						<h3 class="text-center">Real-Time Chat App</h3>
+						<h3 class="text-center">E-Resaka</h3>
 
 						<div class="alert alert-danger d-none" id="alert"></div>
 						<div id="ruler" class="">
@@ -35,18 +35,19 @@
 							<div class="form-group my-0 pt-2 justify-content-end d-flex">
 								<div>
 									<input type="checkbox" name="toggle_pass" id="chkbox1">
-									<label for="chkbox1" class="mr-0">Show Password</label>
+									<label for="chkbox1" class="mr-0">Afficher le mot de passe</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<button class="btn btn-block" style="background-color:#4caf50; border-radius:0%;"
 									id="btn_login">
-									<span>Login</span>
+									<span>Connexion</span>
 								</button>
 							</div>
 
-							<h6 class="text-center">Don't have an account? <a href="index.php/signup"
-									style="text-decoration:none;">Signup Now</a></h6>
+							<h6 class="text-center">
+								Vous n'avez pas de compte ? <a href="index.php/signup" style="text-decoration:none;">
+									Inscrivez-vous maintenant</a></h6>
 
 						</div>
 
