@@ -48,8 +48,8 @@ if (isset($_SESSION)) {
 				</div>
 			</div>
 			<div id="search_box_container" class="py-3">
-				<input type="text" name="txt_search" class="form-control" autocomplete="off" placeholder="Rechercher un utilisateur"
-					id="search">
+				<input type="text" name="txt_search" class="form-control" autocomplete="off"
+					placeholder="Rechercher un utilisateur" id="search">
 			</div>
 			<hr />
 			<div id="user_list" class="py-3">
@@ -60,7 +60,8 @@ if (isset($_SESSION)) {
 				<div id="bg_image"></div>
 				<h2 class="mt-0">Salut ! Bienvenue sur</h2>
 				<h2>E-Resaka</h2>
-				<p class="text-center my-2">Connectez-vous à votre appareil via Internet. N'oubliez pas que vous <br> devez disposer d'une connexion Internet stable pour une<br> meilleure expérience.</p>
+				<p class="text-center my-2">Connectez-vous à votre appareil via Internet. N'oubliez pas que vous <br>
+					devez disposer d'une connexion Internet stable pour une<br> meilleure expérience.</p>
 			</div>
 			<div class="chatting_section" id="chat_area" style="display: none">
 				<div id="header" class="py-2">
@@ -82,6 +83,8 @@ if (isset($_SESSION)) {
 						</div>
 					</div>
 				</div>
+				<div id="recordingIndicator" style="display: none; color:red" class="mt-2">Recording...</div>
+
 				<div id="chat_message_area">
 
 				</div>
@@ -98,8 +101,12 @@ if (isset($_SESSION)) {
 							<span class="material-icons" style="vertical-align: middle;">attach_file</span>
 							<input type="file" id="fileUpload" name="file2" style="display: none;">
 						</label>
+						<label for="microphoneRecord" class="attachmentButton"
+							style="display: inline-block; cursor: pointer;">
+							<span id="microphoneIcon" class="material-icons" style="vertical-align: middle;">mic</span>
+							<input type="button" id="microphoneRecord" value="Record" style="display: none;">
+						</label>
 					</div>
-
 
 					<div id="textBox_attachment_emoji_container" style="display: flex">
 						<div id="text_box_message">
@@ -148,12 +155,13 @@ if (isset($_SESSION)) {
 			</div>
 			<div class="form-group">
 				<label>Contact Number</label>
-				<input type="text" maxlength="10" name="txt_phone" placeholder="Écrivez votre numéro de téléphone mobile" id="phone_num"
-					class="form-control">
+				<input type="text" maxlength="10" name="txt_phone"
+					placeholder="Écrivez votre numéro de téléphone mobile" id="phone_num" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Address</label>
-				<input type="text" name="txt_addr" id="address" placeholder="Écrivez votre adresse" class="form-control">
+				<input type="text" name="txt_addr" id="address" placeholder="Écrivez votre adresse"
+					class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Bio</label>

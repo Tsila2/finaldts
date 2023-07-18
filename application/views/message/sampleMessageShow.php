@@ -10,6 +10,8 @@ for ($i = 0; $i < $count; $i++) {
                     <?php
                     if ($data[$i]['image_path']) {
                         echo '<img src="' . site_url('upload/messages/images/' . $data[$i]['image_path']) . '" alt="" style="width: 100%">';
+                    } else if ($data[$i]['audio_path']) {
+                        echo '<audio controls src="' . site_url('upload/messages/audios/' . $data[$i]['audio_path']) . '" style="width: 100%"></audio>';
                     } else {
                         echo $data[$i]['message'];
                     }
@@ -31,6 +33,8 @@ for ($i = 0; $i < $count; $i++) {
                     <?php
                     if ($data[$i]['image_path']) {
                         echo '<img src="' . site_url('upload/messages/images/' . $data[$i]['image_path']) . '" alt="" style="width: 100%">';
+                    } else if ($data[$i]['audio_path']) {
+                        echo '<audio controls src="' . site_url('upload/messages/audios/' . $data[$i]['audio_path']) . '" style="width: 100%"></audio>';
                     } else {
                         echo $data[$i]['message'];
                     }

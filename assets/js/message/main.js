@@ -9,6 +9,36 @@ $(document).ready(function () {
 	MAIN_PLAY.from("#main", { duration: 0.5, opacity: 0 });
 
 	//Main funtion which will run at the time of page load
+
+	document.addEventListener('DOMContentLoaded', function () {
+		const audioElements = document.getElementsByTagName('audio');
+		for (let i = 0; i < audioElements.length; i++) {
+			const audioElement = audioElements[i];
+			audioElement.addEventListener('play', function () {
+				stopAllAudioAndTimers();
+			});
+		}
+	});
+
+	function stopAllAudioAndTimers() {
+		// Step 1: Find all active audio elements
+		const audioElements = document.getElementsByTagName('audio');
+	  
+		// Step 2: Pause audio playback for each active audio element
+		for (let i = 0; i < audioElements.length; i++) {
+		  const audioElement = audioElements[i];
+		  if (!audioElement.paused) {
+			audioElement.pause();
+		  }
+		}
+	  
+		// Step 3: Clear all setInterval timers
+		const allIntervals = window.setInterval(() => {}, 9999);
+		for (let i = 1; i <= allIntervals; i++) {
+		  clearInterval(i);
+		}
+	  }
+	  
 	//UserSidebarIn
 	function barIn() {
 		$('#details_of_user').css('width', '20%');
@@ -355,6 +385,143 @@ $(document).ready(function () {
 		// Trigger the click event on the hidden file upload input field
 		$('#fileUpload').click();
 	});
+
+	let mediaRecorder;
+	let audioChunks = [];
+
+	navigator.mediaDevices.getUserMedia({ audio: true })
+		.then(function (stream) {
+			mediaRecorder = new MediaRecorder(stream);
+
+			mediaRecorder.ondataavailable = function (event) {
+				if (event.data.size > 0) {
+					audioChunks.push(event.data);
+				}
+			};
+
+			mediaRecorder.onstart = function () {
+				document.getElementById('recordingIndicator').style.display = 'block';
+				document.getElementById('microphoneIcon').textContent = 'stop';
+			};
+
+			mediaRecorder.onstop = function () {
+				document.getElementById('recordingIndicator').style.display = 'none';
+
+				const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+				// // Create an audio element to play the recorded audio
+				// const audioPlayer = document.createElement('audio');
+				// audioPlayer.controls = true;
+				// audioPlayer.src = URL.createObjectURL(audioBlob);
+
+				// // Append the audio element to the container in the HTML
+				// const audioContainer = document.getElementById('audioContainer');
+				// audioContainer.innerHTML = ''; // Clear previous audio elements (if any)
+				// audioContainer.appendChild(audioPlayer);
+
+				// Now you can do whatever you want with the recorded audio data
+				// For example, you can upload it to the server or perform other actions.
+
+				document.getElementById('microphoneIcon').textContent = 'mic';
+				saveAudio(audioBlob); // This is where you send the audio data to the server if needed.
+			};
+		})
+		.catch(function (error) {
+			console.error('Error accessing the microphone:', error);
+		});
+
+	// Function to check microphone permission
+	function checkMicrophonePermission() {
+		return navigator.permissions.query({ name: 'microphone' })
+			.then((permissionStatus) => {
+				if (permissionStatus.state === 'granted') {
+					return true; // Microphone access is already granted
+				} else if (permissionStatus.state === 'prompt') {
+					// Microphone permission has not been granted yet, request it
+					return navigator.mediaDevices.getUserMedia({ audio: true })
+						.then(() => {
+							return true; // Microphone access granted after user prompt
+						})
+						.catch(() => {
+							return false; // Microphone access denied by the user
+						});
+				} else {
+					return false; // Microphone access denied by the user
+				}
+			})
+			.catch(() => {
+				return false; // Error occurred while checking microphone permission
+			});
+	}
+
+	// Function to start recording
+	function startRecording() {
+		audioChunks = [];
+		mediaRecorder.start();
+		console.log('Recording started...');
+	}
+
+	// Function to stop recording
+	function stopRecording() {
+		mediaRecorder.stop();
+		console.log('Recording stopped.');
+	}
+
+	$('#microphoneRecord').click(async function () {
+		if (!mediaRecorder) {
+			// MediaRecorder is not available (possibly due to unsupported browser)
+			console.error('MediaRecorder is not available in this browser.');
+			return;
+		}
+
+		const hasPermission = await checkMicrophonePermission();
+		if (hasPermission) {
+			if (mediaRecorder.state === 'inactive') {
+				startRecording();
+			} else if (mediaRecorder.state === 'recording') {
+				stopRecording();
+			}
+		} else {
+			console.warn('Microphone access is denied. Please grant permission to use the microphone.');
+		}
+	});
+
+
+	function saveAudio(blob) {
+
+		// Send the recorded audio to the server using AJAX
+		var d = new Date(),
+			messageHour = d.getHours(),
+			messageMinute = d.getMinutes(),
+			messageSec = d.getSeconds(),
+			messageYear = d.getFullYear(),
+			messageDate = d.getDate(),
+			messageMonth = d.getMonth() + 1,
+			actualDateTime = `${messageYear}-${messageMonth}-${messageDate} ${messageHour}:${messageMinute}:${messageSec}`;
+
+		var data = new FormData();
+		data.append('file', blob, 'audio.webm');
+		data.append('datetime', actualDateTime);
+		data.append('uniq', unique_id);
+
+		$.ajax({
+			url: 'sent/audio',
+			type: 'POST',
+			data: data,
+			contentType: false,
+			processData: false,
+			success: function (response) {
+				// Handle the upload success
+				console.log(response);
+				// console.log('File uploaded successfully');
+				// $('#fileUpload').val('');
+			},
+			error: function (xhr, status, error) {
+				// Handle the upload error
+				console.error('Échec du téléchargement du fichier:', error);
+			}
+		});
+	}
 
 	// Image upload handling
 	$('#imageUpload').on('change', function (e) {

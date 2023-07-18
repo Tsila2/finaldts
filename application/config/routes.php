@@ -61,4 +61,5 @@ $route['close'] = 'Message/close';
 $route['sent'] = 'Message/sendMessage';
 $route['sent/image'] = 'Message/sendImage';
 $route['sent/file'] = 'Message/sendFile';
+$route['sent/audio'] = 'Message/sendAudio';
 $route['getmessage'] = 'Message/getMessage';

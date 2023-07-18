@@ -206,6 +206,20 @@ class Message extends CI_controller
 		return $new_file_name;
 	}
 
+	private function generateUniqueAudioName($file_name, $extension)
+	{
+		$directory = "upload/messages/audios/";
+		$new_file_name = $file_name;
+		$i = 1;
+
+		while (file_exists($directory . $new_file_name)) {
+			$new_file_name = pathinfo($file_name, PATHINFO_FILENAME) . "_" . $i . "." . $extension;
+			$i++;
+		}
+
+		return $new_file_name;
+	}
+
 
 	public function sendFile()
 	{
@@ -216,7 +230,7 @@ class Message extends CI_controller
 			$file = $_FILES['file'];
 			$file_name = $file['name'];
 			$file_tmpname = $file['tmp_name'];
-			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+			// $extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 			// $file_new_name = substr(md5(microtime()), rand(0, 25), 8);
 			// $file_upload_name = $file_new_name . "." . $extension;
 
@@ -238,6 +252,38 @@ class Message extends CI_controller
 			echo "success";
 		} else {
 			echo "Error";
+		}
+	}
+
+	public function sendAudio()
+	{
+		if (isset($_POST['datetime']) && isset($_SESSION['uniqueid'])) {
+			$uniq = $_SESSION['uniqueid'];
+
+			// Get the audio file
+			$file = $_FILES['file'];
+			$file_name = $file['name'];
+			$file_tmpname = $file['tmp_name'];
+			$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+			// Generate a unique filename
+			$unique_file_name = $this->generateUniqueAudioName($file_name, $extension);
+
+			// Move the uploaded file to the destination directory
+			move_uploaded_file($file_tmpname, "upload/messages/audios/" . $unique_file_name);
+
+			$arr = array(
+				'time' => $_POST['datetime'],
+				'sender_message_id' => $uniq,
+				'receiver_message_id' => $_POST['uniq'],
+				'audio_path' => $unique_file_name,
+			);
+
+			$this->Messagemodel->sentMessage($arr);
+
+			echo "success";
+		} else {
+			echo "error";
 		}
 	}
 
