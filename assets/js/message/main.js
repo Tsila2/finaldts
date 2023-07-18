@@ -23,22 +23,22 @@ $(document).ready(function () {
 	function stopAllAudioAndTimers() {
 		// Step 1: Find all active audio elements
 		const audioElements = document.getElementsByTagName('audio');
-	  
+
 		// Step 2: Pause audio playback for each active audio element
 		for (let i = 0; i < audioElements.length; i++) {
-		  const audioElement = audioElements[i];
-		  if (!audioElement.paused) {
-			audioElement.pause();
-		  }
+			const audioElement = audioElements[i];
+			if (!audioElement.paused) {
+				audioElement.pause();
+			}
 		}
-	  
+
 		// Step 3: Clear all setInterval timers
-		const allIntervals = window.setInterval(() => {}, 9999);
+		const allIntervals = window.setInterval(() => { }, 9999);
 		for (let i = 1; i <= allIntervals; i++) {
-		  clearInterval(i);
+			clearInterval(i);
 		}
-	  }
-	  
+	}
+
 	//UserSidebarIn
 	function barIn() {
 		$('#details_of_user').css('width', '20%');
@@ -89,31 +89,18 @@ $(document).ready(function () {
 				unique_id = $(this).find('#user_avtar').children('#hidden_id').val();
 				bg_image = $(this).find('#user_avtar').css('background-image').split('"')[1];
 
-				clearInterval(inter);
-				clearInterval(inter3);
-
 				getBlockUserData();
 				setInterval(getBlockUserData, 100);
 
 				getUserDetails(unique_id);
-				inter2 = setInterval(getUserList, 1000);
-				inter3 = setInterval(function () {
-					getUserDetails(unique_id)
-				}, 1000);
 				sendUserUniqIDForMsg(unique_id, bg_image);
 
+				addLastMessage(unique_id, bg_image);
+
 				inter = setInterval(function () {
-					sendUserUniqIDForMsg(unique_id, bg_image);
-				}, 1000);
+					addLastMessage(unique_id, bg_image);
+				}, 100);
 			})
-			// $('.innerBox').mouseover(function () {
-			// 	console.log("1");
-			// 	clearInterval(inter2);
-			// })
-			// $('.innerBox').mouseleave(function () {
-			// 	console.log("2");
-			// 	inter2 = setInterval(getUserList, 1000);
-			// })
 		})
 	}
 	function getUserDetails(uniq_id) {
@@ -216,6 +203,17 @@ $(document).ready(function () {
 			setMessageToChatArea(data, bg_image);//setting messages to the chatting section
 		});
 	}
+
+	function addLastMessage(uniq_id, bg_image) {
+		$.post('getlastmessage', { data: uniq_id, image: bg_image }, function (data) {
+			if (data !== 'none') {
+				$('#chat_message_area').append(data);
+				clearInterval(inter2);
+				inter2 = setInterval(getUserList, 1000);
+			}
+		});
+	}
+
 	function setMessageToChatArea(data, bg_image) {
 		scrollToBottom();
 		var res_data;
@@ -265,6 +263,7 @@ $(document).ready(function () {
 			console.log('Called');
 			clearInterval(inter2);
 		} else {
+			clearInterval(inter2);
 			inter2 = setInterval(getUserList, 1000);
 		}
 	});
@@ -322,6 +321,8 @@ $(document).ready(function () {
 			$.post('sent', { data: jsonData }, function (data) {
 				$('#messageText').val('');
 			});
+			clearInterval(inter2);
+			inter2 = setInterval(getUserList, 1000);
 		}
 	})
 	// my details edit icon
@@ -655,10 +656,10 @@ $(document).ready(function () {
 		})
 	}
 
-	Pace.on('done', function () {
+	// Pace.on('done', function () {
 		MAIN_PLAY.play();
-	})
+	// })
 	getUserList(); //Calling the root function without interval
-	inter2 = setInterval(getUserList, 1000); //Calling the root function with interval
+	inter2 = setInterval(getUserList, 1000);
 })
 

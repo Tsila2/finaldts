@@ -58,6 +58,7 @@ class Message extends CI_controller
 	}
 	public function allUser()
 	{
+		sleep(0.01);
 		$data['data'] = $this->Messagemodel->allUser();
 		$data['last_msg'] = array();
 		$this->load->helper('url');
@@ -287,6 +288,45 @@ class Message extends CI_controller
 		}
 	}
 
+	public function getAllLastMessage()
+	{
+		// $lastData = $this->db->order_by('time', 'desc')->limit(1)->get('time')->row();
+		$lastData = $this->Messagemodel->getLastMessage($_POST['data']);
+
+		// Check if there is any data in the table
+		if ($lastData) {
+			$lastId = $lastData[0]['id'];
+
+			// Check if this is the first time checking
+			if (!$this->session->has_userdata('last_id')) {
+				// Store the last ID in session for future comparison
+				$this->session->set_userdata('last_id', $lastId);
+			} else {
+				$previousLastId = $this->session->userdata('last_id');
+
+				// Compare the last ID with the previous one
+				if ($lastId > $previousLastId) {
+					// Update the stored last ID in session with the current one
+					$this->session->set_userdata('last_id', $lastId);
+
+					$data['data'] = $this->Messagemodel->getAllLastMessage($_POST['data'], $previousLastId);
+					$data['image'] = $_POST['image'];
+
+					if (!empty($data['data']) && isset($data['data'][0]['id'])) {
+						$this->load->view('message/sampleMessageShow', $data);
+					} else {
+						echo "none";
+					}
+
+				} else {
+					echo "none";
+				}
+			}
+		} else {
+			echo "none";
+		}
+	}
+
 	public function getMessage()
 	{
 		if (isset($_POST['data']) && isset($_SESSION['uniqueid'])) {
@@ -295,6 +335,7 @@ class Message extends CI_controller
 			$this->load->view('message/sampleMessageShow', $data);
 		}
 	}
+
 	public function updateBio()
 	{
 		if ($_POST) {

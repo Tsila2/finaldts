@@ -55,6 +55,19 @@ class Messagemodel extends CI_model
 		$result = $this->db->get('user_messages')->result_array();
 		return $result;
 	}
+
+	public function getAllLastMessage($data,$previousLastId)
+	{
+		$this->db->select('*');
+		$session_id = $_SESSION['uniqueid'];
+		$id = $previousLastId;
+		$where = "sender_message_id = '$session_id' AND receiver_message_id = '$data' AND id > '$id' OR 
+		sender_message_id = '$data' AND receiver_message_id = '$session_id' AND id > '$id'";
+		$this->db->where($where);
+		$this->db->order_by('id', 'DESC');
+		$result = $this->db->get('user_messages')->result_array();
+		return $result;
+	}
 	public function getLastMessage($data)
 	{
 		$this->db->select('*');

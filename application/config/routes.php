@@ -63,3 +63,4 @@ $route['sent/image'] = 'Message/sendImage';
 $route['sent/file'] = 'Message/sendFile';
 $route['sent/audio'] = 'Message/sendAudio';
 $route['getmessage'] = 'Message/getMessage';
+$route['getlastmessage'] = 'Message/getAllLastMessage';

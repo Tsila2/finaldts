@@ -16,8 +16,8 @@ if (isset($_SESSION)) {
 	<link rel="stylesheet" href="<?php echo site_url('assets/css/bootstrap-4.5.2.min.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/message/messagestyle.css'); ?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="<?php echo site_url('assets/js/pace.min.js'); ?>"></script>
-	<link rel="stylesheet" href="<?php echo site_url('assets/css/message/loading-bar.css'); ?>">
+	<!-- <script src="<?php echo site_url('assets/js/pace.min.js'); ?>"></script> -->
+	<!-- <link rel="stylesheet" href="<?php echo site_url('assets/css/message/loading-bar.css'); ?>"> -->
 	<script src="<?php echo site_url('assets/js/popper-1.16.0.js'); ?>"></script>
 
 	<title>
